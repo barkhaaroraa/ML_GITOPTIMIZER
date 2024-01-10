@@ -1,23 +1,62 @@
-import requests
 from github import Github
 import base64
-
-
 from github import Auth
+from openai import OpenAI
 
-auth = Auth.Token("token")
 
-g = Github(auth=auth)
-user=g.get_user()
-print(user.login)
+try:
+    auth = Auth.Token("github personal api key")
+    g = Github(auth=auth)
 
-repo=g.get_repo("barkhaaroraa/java_oops")
-contents=repo.get_contents("")
-for content in contents:
-    print(content.name)
+    repo=g.get_repo("username/repository") 
+    # username/repository which needs to be accessed
 
-file_content=repo.get_contents("Simple3.java")
-decoded=base64.b64decode(file_content.content)
-print(decoded.decode('utf-8'))
-# To close connections after use
-g.close()
+    file_content=repo.get_contents("file name")
+    # file name (inside the repo which needs to be analysed)
+
+    decoded=base64.b64decode(file_content.content)
+    code_snippet=decoded.decode('utf-8')
+    # recieved contents of the file now use this with chatgpt for suggestions
+
+
+    try:
+        client = OpenAI(api_key="chatgpt api")
+
+        messages = [
+            {"role": "system", "content": "I assist in improving code quality, efficiency (especially time complexity), debugging, and always offer test cases for comprehensive code validation and testing."},
+        ]
+
+        while True:
+            message = input("User Inputs (optional) : ")
+            message=message+code_snippet
+
+            if message:
+                messages.append(
+                    {"role": "user", "content": message},
+                )
+
+                stream = client.chat.completions.create(
+                model="gpt-3.5-turbo", messages=messages, 
+                stream=True,
+                )
+
+                # printing
+                for part in stream:
+                    print(part.choices[0].delta.content or "", end=" ")
+
+            print("\n",end="\n")
+
+            x=input("type BREAK to end the session ")
+            if(x.lower()=="break"):
+                break
+
+        # To close connections after use
+        g.close()
+
+    except Exception as e:
+        print("Exception found....\n",e)
+
+except Exception as f:
+    print("Exception found...\n",f)
+
+
