@@ -2,13 +2,11 @@ from github import Github
 import base64
 from github import Auth
 from openai import OpenAI
-
-
 try:
-    auth = Auth.Token("github personal api key")
+    auth = Auth.Token("github api key")
     g = Github(auth=auth)
 
-    repo=g.get_repo("username/repository") 
+    repo=g.get_repo("username/repository name") 
     # username/repository which needs to be accessed
 
     file_content=repo.get_contents("file name")
@@ -18,9 +16,8 @@ try:
     code_snippet=decoded.decode('utf-8')
     # recieved contents of the file now use this with chatgpt for suggestions
 
-
     try:
-        client = OpenAI(api_key="chatgpt api")
+        client = OpenAI(api_key="openai api key")
 
         messages = [
             {"role": "system", "content": "I assist in improving code quality, efficiency (especially time complexity), debugging, and always offer test cases for comprehensive code validation and testing."},
@@ -53,10 +50,10 @@ try:
         # To close connections after use
         g.close()
 
-    except Exception as e:
-        print("Exception found....\n",e)
+    except Exception as openai_exception:
+        print(f"OpenAI Exception: {openai_exception}")
 
-except Exception as f:
-    print("Exception found...\n",f)
+except Exception as github_exception:
+    print(f"GitHub Exception: {github_exception}")
 
 
