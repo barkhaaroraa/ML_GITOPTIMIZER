@@ -11,3 +11,7 @@ Implemented ChatGPT technology to analyze retrieved code, providing insightful s
 ## Efficiency Enhancement ⚙️
 
 Engineered a solution aimed at enhancing overall code efficiency by leveraging AI-driven insights, ensuring optimized coding practices and improved software performance.
+
+## WORKING DEMO: 
+[DEMO 1](https://drive.google.com/file/d/1rhDSKEeWjHLZaDFk4yKxp5LYkjCYloVt/view?usp=drive_link)
+[DEMO 2](https://drive.google.com/file/d/1Gv4zhPolX6TTWu0hRRuchmBUAXhrtRoG/view?usp=sharing)
