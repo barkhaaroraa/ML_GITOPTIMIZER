@@ -20,7 +20,7 @@ try:
         client = OpenAI(api_key="openai api key")
 
         messages = [
-            {"role": "system", "content": "I assist in improving code quality, efficiency (especially time complexity), debugging, and always offer test cases for comprehensive code validation and testing."},
+            {"role": "system", "content": "I assist in understanding and explaining the code to beginners"},
         ]
 
         while True:
